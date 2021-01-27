@@ -18,30 +18,29 @@ char* to_string(char*); // reads the content of a file then returns it's string 
 
 int main(int argc, char* argv[])
 {
-    // ./linux-sync <file> 
+    // ./linux-sync <file>
     if(argc>1)
     {
         char* filename = argv[1];           // get filename
         char* str = to_string(filename);    // get content
-            
+
         pid_t pid;                          // create new PID
 
         printf(" -- %s -- %s --\n\n", filename, str); // display content
 
         pid = fork();                       // fork the process into multiple branches (parent + childs)
 
-        
         // forking the process
         //
         // A    << parent
         // ^
-        // A*   << child       
+        // A*   << child
         //
-       
+
         if(pid < 0)                         // should never happen, if so, then error
         {
            perror("Fork Error");
-           exit(1); 
+           exit(1);
         }
         else if(pid == 0)                   // if we are the first row, then we are child
         {
@@ -56,15 +55,15 @@ int main(int argc, char* argv[])
             printf("[%d] SYNC-LOG : my name is 'parent' and I wait for child (%d)\n", pid, time(NULL));
             append_str(pid, filename, "my name is 'parent' and I wait for child");
         }
+
+	free(str);
     }
     else
     {
         fprintf(stderr, "Too few arguments ! usage : ./linux-sync <filename>\n");
-        exit(1);    
+        exit(1);
     }
-    
-    
-    free(str); // just to be clean
+
     return 0;
 }
 

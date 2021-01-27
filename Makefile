@@ -1,2 +1,2 @@
 all:
-	gcc linux-sync.c -o linux-sync
+	gcc -Wall linux-sync.c -o linux-sync
